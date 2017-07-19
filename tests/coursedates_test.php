@@ -29,7 +29,7 @@ global $CFG;
 
 class tool_coursedates_coursedates_testcase extends advanced_testcase {
     public function test_set_dates() {
-        global $DB:
+        global $DB;
 
         $this->setAdminUser();
         $this->resetAfterTest(true);
