@@ -56,8 +56,7 @@ class set_course_dates_task extends \core\task\adhoc_task {
             if (!$course->can_edit()) {
                 continue;
             }
-            $record = new \stdClass();
-            $record->id = $course->id;
+            $record = get_course($course->id);
             $record->enddate = $data->enddate;
             update_course($record);
         }
