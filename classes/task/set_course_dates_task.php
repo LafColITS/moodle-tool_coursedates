@@ -53,11 +53,12 @@ class set_course_dates_task extends \core\task\adhoc_task {
             )
         );
         foreach ($courses as $course) {
-            $context = \context_course::instance($course->id);
-            if (has_capability('moodle/course:update', $context)) {
-                $course->enddate = $data->enddate;
-                update_course($course);
+            if (!$course->can_edit()) {
+                continue;
             }
+            $record->id = $course->id;
+            $record->enddate = $data->enddate;
+            update_course($record);
         }
     }
 }
