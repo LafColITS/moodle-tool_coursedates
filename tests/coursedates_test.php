@@ -29,6 +29,8 @@ global $CFG;
 
 class tool_coursedates_coursedates_testcase extends advanced_testcase {
     public function test_set_dates() {
+        global $DB:
+
         $this->setAdminUser();
         $this->resetAfterTest(true);
 
@@ -42,7 +44,9 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         }
 
         // Sanity check.
-        $coursesnoenddate = $DB->count_records('course', array('enddate' => 0));
-        $this->assertEquals(101, $coursesnoenddate);
+        $coursesnoenddate = $DB->count_records('course', array('category' => $category1->id, 'enddate' => 0));
+        $this->assertEquals(1, $coursesnoenddate);
+        $coursesnoenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => 0));
+        $this->assertEquals(100, $coursesnoenddate);
     }
 }
