@@ -37,7 +37,7 @@ class set_course_dates_task extends \core\task\adhoc_task {
             mtrace("No category id");
             return;
         }
-        if (!isset($data->enddate) && $isset($data->startdate)) {
+        if (!isset($data->enddate) && isset($data->startdate)) {
             mtrace("No dates specified");
             return;
         }
@@ -57,13 +57,17 @@ class set_course_dates_task extends \core\task\adhoc_task {
                 continue;
             }
             $record = get_course($course->id);
-            if (isset($data->enddate) && $data->enddate != -1) {
+            if (isset($data->enddate) && $data->enddate !== 0) {
                 $record->enddate = $data->enddate;
             }
-            if (isset($data->startdate) && $data->startdate != -1) {
+            if (isset($data->startdate) && $data->startdate !== 0) {
                 $record->startdate = $data->startdate;
             }
-            update_course($record);
+            try {
+                update_course($record);
+            } catch (\moodle_exception $e) {
+                debugging($e->getMessage());
+            }
         }
     }
 }

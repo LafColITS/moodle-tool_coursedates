@@ -26,8 +26,6 @@ require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->dirroot.'/lib/coursecatlib.php');
 
 $categoryid = required_param('category', PARAM_INT);
-$startdate  = optional_param('startdate', -1, PARAM_INT);
-$enddate    = optional_param('enddate', -1, PARAM_INT);
 $category   = \coursecat::get($categoryid);
 $context    = \context_coursecat::instance($categoryid);
 
@@ -60,8 +58,8 @@ if ($mform->is_cancelled()) {
     $task->set_custom_data(
         array(
             'category' => $categoryid,
-            'enddate' => $enddate,
-            'startdate' => $startdate
+            'enddate' => $data->enddate,
+            'startdate' => $data->startdate
         )
     );
     \core\task\manager::queue_adhoc_task($task);

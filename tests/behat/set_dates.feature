@@ -26,10 +26,9 @@ Feature: The course dates tool allows a manager to set start and end dates in bu
     And I follow "Category 1"
     When I navigate to "Set course dates" in current page administration
     And I set the following fields to these values:
+      | id_enddate_enabled   | 1       |
       | id_enddate_day       | 1       |
       | id_enddate_month     | January |
       | id_enddate_year      | 2020    |
-      | id_startdate_enabled | 0       |
-      | id_enddate_enabled   | 1       |
     And I press "Confirm"
     And I trigger cron
