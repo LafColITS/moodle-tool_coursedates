@@ -63,7 +63,11 @@ class set_course_dates_task extends \core\task\adhoc_task {
             if (isset($data->startdate)) {
                 $record->startdate = $data->startdate;
             }
-            update_course($record);
+            try {
+                update_course($record);
+            } catch (\moodle_exception $e) {
+                debugging($data->enddate . '::' . $data->startdate);
+            }
         }
     }
 }
