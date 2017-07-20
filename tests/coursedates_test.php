@@ -90,13 +90,13 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $coursesnoenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $courseenddate));
         $this->assertEquals(100, $coursesnoenddate);
 
-        // Move one course forward one week.
+        // Move all but one course forward one week.
         $newstartdate = $coursestartdate + 86400;
         $newenddate = $courseenddate + 86400;
         $task = new \tool_coursedates\task\set_course_dates_task();
         $task->set_custom_data(
             array(
-                'category'  => $category1->id,
+                'category'  => $category2->id,
                 'enddate'   => $newenddate,
                 'startdate' => $newstartdate
             )
@@ -110,9 +110,9 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         // One course should be forward a week.
         $coursesnewdates = $DB->count_records('course',
             array('category' => $category1->id, 'startdate' => $newstartdate, 'enddate' => $newenddate));
-        $this->assertEquals(1, $coursesnewdates);
+        $this->assertEquals(0, $coursesnewdates);
         $coursesnochange = $DB->count_records('course',
             array('category' => $category2->id, 'startdate' => $newstartdate, 'enddate' => $newenddate));
-        $this->assertEquals(0, $coursesnochange);
+        $this->assertEquals(100, $coursesnochange);
     }
 }
