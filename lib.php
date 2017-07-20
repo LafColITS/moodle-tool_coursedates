@@ -15,16 +15,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Language strings for tool_coursedates.
+ * Navigation for tool_coursedates.
  *
  * @package   tool_coursedates
  * @copyright 2017 Lafayette College ITS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 
-$string['atleastonedate'] = 'You must set at least one date to update';
-$string['pluginname'] = 'Set course dates';
-$string['setdates'] = 'Set course dates';
-$string['updatequeued'] = 'An adhoc task has been queued to update all the courses in the category <strong>{$a}</strong>. It will run the next time cron executes.';
+function tool_coursedates_extend_navigation_category_settings($navigation, $context) {
+    if (has_capability('moodle/course:update', $context)) {
+         $navigation->add_node(
+             navigation_node::create(
+                 get_string('setdates', 'tool_coursedates'),
+                    new moodle_url(
+                        "/admin/tool/coursedates/index.php",
+                        array('category' => $context->instanceid, 'action' => 0)
+                    ),
+                    navigation_node::TYPE_SETTING,
+                    null,
+                    null,
+                    new pix_icon('i/settings', '')
+                    )
+                );
+    }
+}

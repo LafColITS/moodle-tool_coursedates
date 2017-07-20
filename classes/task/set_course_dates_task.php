@@ -57,10 +57,10 @@ class set_course_dates_task extends \core\task\adhoc_task {
                 continue;
             }
             $record = get_course($course->id);
-            if (isset($data->enddate)) {
+            if (isset($data->enddate) && $data->enddate != -1) {
                 $record->enddate = $data->enddate;
             }
-            if (isset($data->startdate)) {
+            if (isset($data->startdate) && $data->startdate != -1) {
                 $record->startdate = $data->startdate;
             }
             update_course($record);
