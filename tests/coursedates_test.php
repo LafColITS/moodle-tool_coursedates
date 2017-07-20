@@ -75,7 +75,7 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $task->set_custom_data(
             array(
                 'category' => $category1->id,
-                'enddate' => $courseenddate,
+                'enddate'  => $courseenddate,
             )
         );
         \core\task\manager::queue_adhoc_task($task);
@@ -89,5 +89,30 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $this->assertEquals(1, $coursesnoenddate);
         $coursesnoenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $courseenddate));
         $this->assertEquals(100, $coursesnoenddate);
+
+        // Move one course forward one week.
+        $newstartdate = $coursestartdate + 86400;
+        $newenddate = $courseenddate + 86400;
+        $task = new \tool_coursedates\task\set_course_dates_task();
+        $task->set_custom_data(
+            array(
+                'category'  => $category1->id,
+                'enddate'   => $newstartdate,
+                'startdate' => $newenddate
+            )
+        );
+        \core\task\manager::queue_adhoc_task($task);
+        $task = \core\task\manager::get_next_adhoc_task(time());
+        $this->assertInstanceOf('\\tool_coursedates\\task\\set_course_dates_task', $task);
+        $task->execute();
+        \core\task\manager::adhoc_task_complete($task);
+
+        // One course should be forward a week.
+        $coursesnewdates = $DB->count_records('course',
+            array('category' => $category1->id, 'startdate' => $newstartdate, 'enddate' => $newenddate));
+        $this->assertEquals(1, $coursesnewdates);
+        $coursesnochange = $DB->count_records('course',
+            array('category' => $category2->id, 'startdate' => $newstartdate, 'enddate' => $newenddate));
+        $this->assertEquals(0, $coursesnochange);
     }
 }

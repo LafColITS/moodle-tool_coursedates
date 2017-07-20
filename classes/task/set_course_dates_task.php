@@ -37,8 +37,8 @@ class set_course_dates_task extends \core\task\adhoc_task {
             mtrace("No category id");
             return;
         }
-        if (!isset($data->enddate)) {
-            mtrace("No end date specified");
+        if (!isset($data->enddate) && $isset($data->startdate)) {
+            mtrace("No dates specified");
             return;
         }
         $category = \coursecat::get($data->category);
@@ -57,7 +57,12 @@ class set_course_dates_task extends \core\task\adhoc_task {
                 continue;
             }
             $record = get_course($course->id);
-            $record->enddate = $data->enddate;
+            if (isset($data->enddate)) {
+                $record->enddate = $data->enddate;
+            }
+            if (isset($data->startdate)) {
+                $record->startdate = $data->startdate;
+            }
             update_course($record);
         }
     }
