@@ -22,13 +22,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace tool\coursedates;
+namespace tool_coursedates;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 
-class set_dates_form extends moodleform {
+class set_dates_form extends \moodleform {
     public function definition() {
         $mform = $this->_form;
 

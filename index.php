@@ -68,7 +68,7 @@ if ($mform->is_cancelled()) {
     redirect($returnurl, get_string('updatequeued', 'tool_coursedates', $category->name));
 } else {
     // Prepare the form.
-    $mdata->set_data(array('category' => $categoryid));
+    $mform->set_data(array('category' => $categoryid));
 }
 
 // Print page.
