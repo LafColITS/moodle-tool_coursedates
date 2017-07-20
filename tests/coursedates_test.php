@@ -97,8 +97,8 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $task->set_custom_data(
             array(
                 'category'  => $category1->id,
-                'enddate'   => $newstartdate,
-                'startdate' => $newenddate
+                'enddate'   => $newenddate,
+                'startdate' => $newstartdate
             )
         );
         \core\task\manager::queue_adhoc_task($task);
