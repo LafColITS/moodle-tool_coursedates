@@ -47,7 +47,8 @@ class set_dates_form extends \moodleform {
 
     public function validation($data, $files) {
         $errors = array();
-        if (!isset($data['startdate']) && !isset($data['enddate'])) {
+        if ((!isset($data['startdate']) || $data['startdate'] == 0)
+            && (!isset($data['enddate']) || $data['enddate'] == 0)) {
             $errors['startdate'] = get_string('atleastonedate', 'tool_coursedates');
         }
         return $errors;

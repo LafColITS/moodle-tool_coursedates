@@ -31,4 +31,24 @@ Feature: The course dates tool allows a manager to set start and end dates in bu
       | id_enddate_month     | January |
       | id_enddate_year      | 2020    |
     And I press "Confirm"
+    And I should see "An adhoc task has been queued"
+    And I trigger cron
+
+  @javascript
+  Scenario: Manager sets start and end dates for each course
+    When I log in as "admin"
+    And I am on course index
+    And I follow "Category 1"
+    When I navigate to "Set course dates" in current page administration
+    And I set the following fields to these values:
+      | id_startdate_enabled | 1       |
+      | id_startdate_day     | 1       |
+      | id_startdate_month   | January |
+      | id_startdate_year    | 2020    |
+      | id_enddate_enabled   | 1       |
+      | id_enddate_day       | 2       |
+      | id_enddate_month     | January |
+      | id_enddate_year      | 2020    |
+    And I press "Confirm"
+    And I should see "An adhoc task has been queued"
     And I trigger cron
