@@ -19,7 +19,6 @@ Feature: The course dates tool allows a manager to set start and end dates in bu
       | Course 4 | C4        | CAT3     | 1       | 1546300800 |
       | Course 5 | C5        | CAT4     | 1       | 1546300800 |
 
-  @javascript
   Scenario: Manager sets an end date for each course
     When I log in as "admin"
     And I am on course index
@@ -34,7 +33,6 @@ Feature: The course dates tool allows a manager to set start and end dates in bu
     And I should see "An adhoc task has been queued"
     And I trigger cron
 
-  @javascript
   Scenario: Manager sets start and end dates for each course
     When I log in as "admin"
     And I am on course index
