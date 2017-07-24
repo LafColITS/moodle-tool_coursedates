@@ -21,7 +21,7 @@ php:
 
 env:
   global:
-    - PHPCD_IGNORE_PATH=tests
+    - PHPCPD_IGNORE_PATH=tests
   matrix:
     - DB=pgsql MOODLE_BRANCH=MOODLE_33_STABLE
     - DB=pgsql MOODLE_BRANCH=master
