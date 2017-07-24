@@ -59,7 +59,8 @@ if ($mform->is_cancelled()) {
         array(
             'category' => $categoryid,
             'enddate' => $data->enddate,
-            'startdate' => $data->startdate
+            'startdate' => $data->startdate,
+            'autoenddate' => $data->autoenddate
         )
     );
     \core\task\manager::queue_adhoc_task($task);

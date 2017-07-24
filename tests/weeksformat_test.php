@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-class tool_coursedates_coursedates_testcase extends advanced_testcase {
+class tool_coursedates_weeksformat_testcase extends advanced_testcase {
     public function test_set_dates() {
         global $DB;
 
@@ -40,13 +40,17 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $category2 = $this->getDataGenerator()->create_category(array('parent' => $category1->id));
         $this->getDataGenerator()->create_course(array('category' => $category1->id, 'startdate' => $coursestartdate));
         for ($i = 1; $i <= 100; $i++) {
-            $this->getDataGenerator()->create_course(array('category' => $category2->id, 'startdate' => $coursestartdate));
+            $this->getDataGenerator()->create_course(
+                array('category' => $category2->id, 'startdate' => $coursestartdate, 'format' => 'weeks')
+            );
         }
 
         // Sanity check.
-        $coursesnoenddate = $DB->count_records('course', array('category' => $category1->id, 'enddate' => 0));
+        $coursesnoenddate = $DB->count_records('course', array('category' => $category1->id, 'enddate' => 0, 'format' => 'topics'));
         $this->assertEquals(1, $coursesnoenddate);
-        $coursesnoenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => 0));
+        $coursesnoenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => 0, 'format' => 'weeks'));
+        $this->assertEquals(0, $coursesnoenddate);
+        $coursesnoenddate = $DB->count_records('course', array('category' => $category2->id, 'format' => 'weeks'));
         $this->assertEquals(100, $coursesnoenddate);
 
         // Set an end date for the second category only.
@@ -56,7 +60,7 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
             array(
                 'category' => $category2->id,
                 'enddate' => $courseenddate,
-                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT
+                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_OFF
             )
         );
         \core\task\manager::queue_adhoc_task($task);
@@ -117,5 +121,29 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $coursesnochange = $DB->count_records('course',
             array('category' => $category2->id, 'startdate' => $newstartdate, 'enddate' => $newenddate));
         $this->assertEquals(100, $coursesnochange);
+
+        // Verify that Moodle can regain control of the end date.
+        $task = new \tool_coursedates\task\set_course_dates_task();
+        $task->set_custom_data(
+            array(
+                'category'  => $category2->id,
+                'enddate'   => $newenddate,
+                'startdate' => $newstartdate,
+                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_ON
+            )
+        );
+        \core\task\manager::queue_adhoc_task($task);
+        $task = \core\task\manager::get_next_adhoc_task(time());
+        $this->assertInstanceOf('\\tool_coursedates\\task\\set_course_dates_task', $task);
+        $task->execute();
+        \core\task\manager::adhoc_task_complete($task);
+
+        // The courses in category 2 should no longer have the set end date.
+        $coursesnewdates = $DB->count_records('course',
+            array('category' => $category1->id, 'startdate' => $newstartdate, 'enddate' => $newenddate));
+        $this->assertEquals(0, $coursesnewdates);
+        $coursesnochange = $DB->count_records('course',
+            array('category' => $category2->id, 'startdate' => $newstartdate, 'enddate' => $newenddate));
+        $this->assertEquals(0, $coursesnochange);
     }
 }

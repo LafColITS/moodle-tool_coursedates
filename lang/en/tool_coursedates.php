@@ -25,6 +25,11 @@
 defined('MOODLE_INTERNAL') || die;
 
 $string['atleastonedate'] = 'You must set at least one date to update';
+$string['autoenddate'] = 'Calculate the end date?';
+$string['autoenddate_default'] = 'Do not modify';
+$string['autoenddate_help'] = 'Moodle can calculate the end date based on the number of sections in courses which use the weekly topic format. You may choose whether to enforce this on the category level.';
+$string['autoenddate_off'] = 'Disable auto end dates';
+$string['autoenddate_on'] = 'Force auto end dates';
 $string['pluginname'] = 'Set course dates';
 $string['setdates'] = 'Set course dates';
 $string['updatequeued'] = 'An adhoc task has been queued to update all the courses in the category <strong>{$a}</strong>. It will run the next time cron executes.';

@@ -27,6 +27,7 @@ namespace tool_coursedates;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
+require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
 
 class set_dates_form extends \moodleform {
     public function definition() {
@@ -37,6 +38,17 @@ class set_dates_form extends \moodleform {
         $mform->addHelpButton('startdate', 'startdate');
         $mform->addElement('date_selector', 'enddate', get_string('enddate'), array('optional' => true));
         $mform->addHelpButton('enddate', 'enddate');
+
+        // Auto end dates for weekly format.
+        $options = array(
+            TOOL_COURSEDATES_AUTOENDDATE_DEFAULT => get_string('autoenddate_default', 'tool_coursedates'),
+            TOOL_COURSEDATES_AUTOENDDATE_ON      => get_string('autoenddate_on', 'tool_coursedates'),
+            TOOL_COURSEDATES_AUTOENDDATE_OFF     => get_string('autoenddate_off', 'tool_coursedates')
+        );
+        $mform->addElement('select', 'autoenddate', get_string('autoenddate', 'tool_coursedates'),
+            $options);
+        $mform->addHelpButton('autoenddate', 'autoenddate', 'tool_coursedates');
+        $mform->setDefault('autoenddate', TOOL_COURSEDATES_AUTOENDDATE_DEFAULT);
 
         // Metadata.
         $mform->addElement('hidden', 'category');

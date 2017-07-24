@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Local library functions for the coursedates tool.
+ *
  * @package   tool_coursedates
  * @copyright 2017 Lafayette College ITS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- defined('MOODLE_INTERNAL') || die();
+ defined('MOODLE_INTERNAL') || die;
 
- $plugin->version   = 2017072400;
- $plugin->requires  = 2017051500;
- $plugin->component = 'tool_coursedates';
- $plugin->maturity  = MATURITY_ALPHA;
- $plugin->release   = 'v0.0.1';
+ define('TOOL_COURSEDATES_AUTOENDDATE_DEFAULT', 2);
+ define('TOOL_COURSEDATES_AUTOENDDATE_ON', 1);
+ define('TOOL_COURSEDATES_AUTOENDDATE_OFF', 0);
