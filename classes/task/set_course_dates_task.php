@@ -25,7 +25,6 @@ namespace tool_coursedates\task;
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot.'/lib/coursecatlib.php');
-require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
 
 class set_course_dates_task extends \core\task\adhoc_task {
     public function get_component() {
@@ -54,29 +53,7 @@ class set_course_dates_task extends \core\task\adhoc_task {
             )
         );
         foreach ($courses as $course) {
-            if (!$course->can_edit()) {
-                continue;
-            }
-
-            // Handle requested format changes.
-            if ($data->autoenddate != TOOL_COURSEDATES_AUTOENDDATE_DEFAULT && $course->format == 'weeks') {
-                $format = course_get_format($course);
-                $formatoptions = array('automaticenddate' => $data->autoenddate);
-                $format->update_course_format_options($formatoptions);
-            }
-
-            $record = get_course($course->id);
-            if (isset($data->enddate) && $data->enddate !== 0) {
-                $record->enddate = $data->enddate;
-            }
-            if (isset($data->startdate) && $data->startdate !== 0) {
-                $record->startdate = $data->startdate;
-            }
-            try {
-                update_course($record);
-            } catch (\moodle_exception $e) {
-                debugging($e->getMessage());
-            }
+            \tool_coursedates\set_dates::maybe_alter_course_dates($course, $data);
         }
     }
 }

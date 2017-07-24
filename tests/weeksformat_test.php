@@ -27,6 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
+require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
+
 class tool_coursedates_weeksformat_testcase extends advanced_testcase {
     public function test_set_dates() {
         global $DB;
