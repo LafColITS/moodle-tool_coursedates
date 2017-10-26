@@ -1,5 +1,5 @@
 @tool @tool_coursedates
-Feature: The course dates tool allows a manager to set start and end dates in bulk
+Feature: Set end dates for week format courses
   In order to set the end date for a course with a weeks format
   As a manager
   I need to turn off the auto end date feature
