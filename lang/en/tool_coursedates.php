@@ -31,5 +31,6 @@ $string['autoenddate_help'] = 'Moodle can calculate the end date based on the nu
 $string['autoenddate_off'] = 'Disable auto end dates';
 $string['autoenddate_on'] = 'Force auto end dates';
 $string['pluginname'] = 'Set course dates';
+$string['privacy:metadata'] = 'The Set course dates plugin does not store any personal data.';
 $string['setdates'] = 'Set course dates';
 $string['updatequeued'] = 'An adhoc task has been queued to update all the courses in the category <strong>{$a}</strong>. It will run the next time cron executes.';
