@@ -15,29 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Navigation for tool_coursedates.
+ * Custom capabilities for tool_coursedates.
  *
  * @package   tool_coursedates
- * @copyright 2017 Lafayette College ITS
+ * @copyright 2018 Lafayette College ITS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-function tool_coursedates_extend_navigation_category_settings($navigation, $context) {
-    if (has_capability('tool/coursedates:setdates', $context)) {
-         $navigation->add_node(
-             navigation_node::create(
-                 get_string('setdates', 'tool_coursedates'),
-                    new moodle_url(
-                        "/admin/tool/coursedates/index.php",
-                        array('category' => $context->instanceid)
-                    ),
-                    navigation_node::TYPE_SETTING,
-                    null,
-                    null,
-                    new pix_icon('i/settings', '')
-                    )
-                );
-    }
-}
+$capabilities = array(
+    'tool/coursedates:setdates' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSECAT,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        ),
+        'clonepermissionsfrom' => 'moodle/category:manage'
+    ),
+);
