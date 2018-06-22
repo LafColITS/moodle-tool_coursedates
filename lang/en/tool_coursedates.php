@@ -30,6 +30,7 @@ $string['autoenddate_default'] = 'Do not modify';
 $string['autoenddate_help'] = 'Moodle can calculate the end date based on the number of sections in courses which use the weekly topic format. You may choose whether to enforce this on the category level.';
 $string['autoenddate_off'] = 'Disable auto end dates';
 $string['autoenddate_on'] = 'Force auto end dates';
+$string['coursedates:setdates'] = 'Set the start/end dates of all courses in a category.';
 $string['pluginname'] = 'Set course dates';
 $string['privacy:metadata'] = 'The Set course dates plugin does not store any personal data.';
 $string['setdates'] = 'Set course dates';
