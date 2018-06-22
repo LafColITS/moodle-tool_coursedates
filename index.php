@@ -31,7 +31,7 @@ $context    = \context_coursecat::instance($categoryid);
 
 // Ensure the user can be here.
 require_login(0, false);
-require_capability('moodle/course:update', $context);
+require_capability('tool/coursedates:setdates', $context);
 $returnurl = new \moodle_url('/course/management.php', array('categoryid' => $categoryid));
 
 // Current location.
