@@ -24,8 +24,6 @@ namespace tool_coursedates\task;
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot.'/lib/coursecatlib.php');
-
 class set_course_dates_task extends \core\task\adhoc_task {
     public function get_component() {
         return 'tool_coursedates';
@@ -41,7 +39,7 @@ class set_course_dates_task extends \core\task\adhoc_task {
             mtrace("No dates specified");
             return;
         }
-        $category = \coursecat::get($data->category);
+        $category = \core_course_category::get($data->category);
         if (!$category) {
             mtrace("Invalid category id");
             return;
