@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Adhoc task for setting course dates.
+ *
  * @package   tool_coursedates
  * @copyright 2017 Lafayette College ITS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,11 +26,26 @@ namespace tool_coursedates\task;
 
 defined('MOODLE_INTERNAL') || die;
 
+/**
+ * Adhoc task for setting course dates.
+ *
+ * @package   tool_coursedates
+ * @copyright 2017 Lafayette College ITS
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class set_course_dates_task extends \core\task\adhoc_task {
+    /**
+     * Return the name of the component.
+     *
+     * @return string The name of the component.
+     */
     public function get_component() {
         return 'tool_coursedates';
     }
 
+    /**
+     * Execute the adhoc task.
+     */
     public function execute() {
         $data = $this->get_custom_data();
         if (empty($data->category)) {

@@ -29,6 +29,13 @@ global $CFG;
 
 require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
 
+/**
+ * Unit test for setting course dates.
+ *
+ * @package   tool_coursedates
+ * @copyright 2017 Lafayette College ITS
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class tool_coursedates_coursedates_testcase extends advanced_testcase {
     public function test_set_dates() {
         global $DB;

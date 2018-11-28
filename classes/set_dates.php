@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Functions.
+ * Helper functions for tool_coursedates.
  *
  * @package   tool_coursedates
  * @copyright 2017 Lafayette College ITS
@@ -28,6 +28,13 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
 
+/**
+ * Helper functions for tool_coursedates.
+ *
+ * @package   tool_coursedates
+ * @copyright 2017 Lafayette College ITS
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class set_dates {
     /**
      * Alter course date information for a single course.

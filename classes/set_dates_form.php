@@ -29,7 +29,17 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
 
+/**
+ * Form for changing course dates.
+ *
+ * @package   tool_coursedates
+ * @copyright 2017 Lafayette College ITS
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class set_dates_form extends \moodleform {
+    /**
+     * Defines the form.
+     */
     public function definition() {
         $mform = $this->_form;
 
@@ -57,6 +67,12 @@ class set_dates_form extends \moodleform {
         $this->add_action_buttons(true, get_string('confirm'));
     }
 
+    /**
+     * Validation check for form submission.
+     *
+     * @param array $data Submitted form data.
+     * @param array $files Submitted files. Unused.
+     */
     public function validation($data, $files) {
         $errors = array();
         if ((!isset($data['startdate']) || $data['startdate'] == 0)
