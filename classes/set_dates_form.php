@@ -43,6 +43,10 @@ class set_dates_form extends \moodleform {
     public function definition() {
         $mform = $this->_form;
 
+        // Explanatory instruction.
+
+        $mform->addElement('html', '<p>' . get_string('setdatesinstruction', 'tool_coursedates') . '</p>');
+
         // Date pickers.
         $mform->addElement('date_selector', 'startdate', get_string('startdate'), array('optional' => true));
         $mform->addHelpButton('startdate', 'startdate');
