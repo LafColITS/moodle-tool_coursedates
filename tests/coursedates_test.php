@@ -75,10 +75,10 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         \core\task\manager::adhoc_task_complete($task);
 
         // All but one course should have an end date.
-        $coursesnoenddate = $DB->count_records('course', array('category' => $category1->id, 'enddate' => $courseenddate));
-        $this->assertEquals(0, $coursesnoenddate);
-        $coursesnoenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $courseenddate));
-        $this->assertEquals(100, $coursesnoenddate);
+        $courseswithenddate = $DB->count_records('course', array('category' => $category1->id, 'enddate' => $courseenddate));
+        $this->assertEquals(0, $courseswithenddate);
+        $courseswithenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $courseenddate));
+        $this->assertEquals(100, $courseswithenddate);
 
         // Set an end date for the first category.
         $task = new \tool_coursedates\task\set_course_dates_task();
@@ -96,8 +96,8 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         \core\task\manager::adhoc_task_complete($task);
 
         // All courses should have an end date.
-        $coursesnoenddate = $DB->count_records('course', array('category' => $category1->id, 'enddate' => $courseenddate));
-        $this->assertEquals(1, $coursesnoenddate);
+        $courseswithenddate = $DB->count_records('course', array('category' => $category1->id, 'enddate' => $courseenddate));
+        $this->assertEquals(1, $courseswithenddate);
         $coursesnoenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $courseenddate));
         $this->assertEquals(100, $coursesnoenddate);
 

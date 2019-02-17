@@ -25,9 +25,11 @@
 namespace tool_coursedates;
 
 defined('MOODLE_INTERNAL') || die();
+global $CFG;
 
 require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
 require_once($CFG->dirroot.'/course/lib.php');
+require_once($CFG->dirroot . '/course/externallib.php');
 
 /**
  * Helper functions for tool_coursedates.
@@ -42,25 +44,32 @@ class set_dates {
      *
      * @param stdClass $course
      * @param stdClass $data
+     * @param bool $keepexisting
      */
-    public static function maybe_alter_course_dates($course, $data) {
+    public static function maybe_alter_course_dates($course, $data, $keepexisting = 0) {
         if (!$course->can_edit()) {
             return;
         }
 
         // Handle requested format changes.
-        if ($data->autoenddate != TOOL_COURSEDATES_AUTOENDDATE_DEFAULT && $course->format == 'weeks') {
-            $format = course_get_format($course);
-            $formatoptions = array('automaticenddate' => $data->autoenddate);
-            $format->update_course_format_options($formatoptions);
+        if ($keepexisting == 0) {
+            if ($data->autoenddate != TOOL_COURSEDATES_AUTOENDDATE_DEFAULT && $course->format == 'weeks') {
+                $format = course_get_format($course);
+                $formatoptions = array('automaticenddate' => $data->autoenddate);
+                $format->update_course_format_options($formatoptions);
+            }
         }
 
         $record = get_course($course->id);
         if (isset($data->enddate) && $data->enddate !== 0) {
-            $record->enddate = $data->enddate;
+            if ($keepexisting == 0) {
+                $record->enddate = $data->enddate;
+            }
         }
         if (isset($data->startdate) && $data->startdate !== 0) {
-            $record->startdate = $data->startdate;
+            if ($keepexisting == 0) {
+                $record->startdate = $data->startdate;
+            }
         }
         try {
             update_course($record);
