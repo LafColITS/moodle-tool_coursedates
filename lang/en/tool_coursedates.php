@@ -34,4 +34,5 @@ $string['coursedates:setdates'] = 'Set the start/end dates of all courses in a c
 $string['pluginname'] = 'Set course dates';
 $string['privacy:metadata'] = 'The Set course dates plugin does not store any personal data.';
 $string['setdates'] = 'Set course dates';
+$string['setdatesinstruction'] = 'Set the start and end dates for all courses in a category, including subcategories. Choose your options and click "Confirm". On confirmation, Moodle will create an "adhoc task" to set all the dates in the background. This requires that cron be enabled.';
 $string['updatequeued'] = 'An adhoc task has been queued to update all the courses in the category <strong>{$a}</strong>. It will run the next time cron executes.';
