@@ -63,7 +63,8 @@ if ($mform->is_cancelled()) {
         )
     );
     \core\task\manager::queue_adhoc_task($task);
-    redirect($returnurl, get_string('updatequeued', 'tool_coursedates', $category->name));
+    redirect($returnurl, get_string('updatequeued', 'tool_coursedates',
+        format_string($category->name, true, array('context' => $context))));
 } else {
     // Prepare the form.
     $mform->set_data(array('category' => $categoryid));
