@@ -27,6 +27,7 @@ namespace tool_coursedates;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
+require_once($CFG->dirroot.'/course/lib.php');
 
 /**
  * Helper functions for tool_coursedates.
