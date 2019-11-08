@@ -43,7 +43,7 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $this->setAdminUser();
         $this->resetAfterTest(true);
 
-        // Create test data.
+        // Create test data. Category 1 has a single course; Category 2 has 100 courses.
         $coursestartdate = time();
         $category1 = $this->getDataGenerator()->create_category();
         $category2 = $this->getDataGenerator()->create_category(array('parent' => $category1->id));
@@ -65,7 +65,8 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
             array(
                 'category' => $category2->id,
                 'enddate' => $courseenddate,
-                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT
+                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
+                'keepexisting' => TOOL_COURSEDATES_KEEPEXISTING_NO
             )
         );
         \core\task\manager::queue_adhoc_task($task);
@@ -80,13 +81,14 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $courseswithenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $courseenddate));
         $this->assertEquals(100, $courseswithenddate);
 
-        // Set an end date for the first category.
+        // Set an end date for the single course in the first category.
         $task = new \tool_coursedates\task\set_course_dates_task();
         $task->set_custom_data(
             array(
                 'category' => $category1->id,
                 'enddate'  => $courseenddate,
-                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT
+                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
+                'keepexisting' => TOOL_COURSEDATES_KEEPEXISTING_NO
             )
         );
         \core\task\manager::queue_adhoc_task($task);
@@ -110,7 +112,8 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
                 'category'  => $category2->id,
                 'enddate'   => $newenddate,
                 'startdate' => $newstartdate,
-                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT
+                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
+                'keepexisting' => TOOL_COURSEDATES_KEEPEXISTING_NO
             )
         );
         \core\task\manager::queue_adhoc_task($task);
@@ -126,5 +129,37 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $coursesnochange = $DB->count_records('course',
             array('category' => $category2->id, 'startdate' => $newstartdate, 'enddate' => $newenddate));
         $this->assertEquals(100, $coursesnochange);
+
+        // Keep existing test. Unset the end date for half the courses in Category 2,
+        // then set a different end date for them.
+        $keptenddate = $newenddate;
+        $DB->set_field_select('course', 'enddate', 0, "category = ? AND MOD(id, 2) = 0", array($category2->id));
+        $courseswithenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $keptenddate));
+        $this->assertEquals(50, $courseswithenddate);
+        $courseswithnoenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => 0));
+        $this->assertEquals(50, $courseswithnoenddate);
+
+        // Set a new end date only for the courses in Category 2 with no end date.
+        $unkeptenddate = $keptenddate + 86400;
+        $task = new \tool_coursedates\task\set_course_dates_task();
+        $task->set_custom_data(
+            array(
+                'category'  => $category2->id,
+                'enddate'   => $unkeptenddate,
+                'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
+                'keepexisting' => TOOL_COURSEDATES_KEEPEXISTING_YES
+            )
+        );
+        \core\task\manager::queue_adhoc_task($task);
+        $task = \core\task\manager::get_next_adhoc_task(time());
+        $this->assertInstanceOf('\\tool_coursedates\\task\\set_course_dates_task', $task);
+        $task->execute();
+        \core\task\manager::adhoc_task_complete($task);
+
+        // Half the courses in Category 2 should have the new end date.
+        $courseswithkeptenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $keptenddate));
+        $this->assertEquals(50, $courseswithkeptenddate);
+        $courseswithunkeptenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $unkeptenddate));
+        $this->assertEquals(50, $courseswithunkeptenddate);
     }
 }

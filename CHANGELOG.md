@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Allow retaining existing non-zero end dates (thanks @lucaboesch)
+
 ## 3.6.1 (November 18, 2019)
 
 - Support for multilang category names (thanks @lucaboesch)

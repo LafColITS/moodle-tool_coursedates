@@ -22,8 +22,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die;
 
- define('TOOL_COURSEDATES_AUTOENDDATE_DEFAULT', 2);
- define('TOOL_COURSEDATES_AUTOENDDATE_ON', 1);
- define('TOOL_COURSEDATES_AUTOENDDATE_OFF', 0);
+// Automatic end date settings for weekly format.
+define('TOOL_COURSEDATES_AUTOENDDATE_DEFAULT', 2);
+define('TOOL_COURSEDATES_AUTOENDDATE_ON', 1);
+define('TOOL_COURSEDATES_AUTOENDDATE_OFF', 0);
+
+// Whether to keep existing end dates.
+define('TOOL_COURSEDATES_KEEPEXISTING_NO', 0);
+define('TOOL_COURSEDATES_KEEPEXISTING_YES', 1);
