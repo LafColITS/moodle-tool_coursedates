@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.6.1 (November 18, 2019)
+
+- Support for multilang category names (thanks @lucaboesch)
+- Fix CLI execution failure (thanks @abias)
+
 ## 3.6.0 (November 28, 2018)
 
 - Update internal API in light of [MDL-62742](https://tracker.moodle.org/browse/MDL-62742)
