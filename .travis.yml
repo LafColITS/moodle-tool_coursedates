@@ -1,9 +1,8 @@
 language: php
 
-sudo: false
-
 addons:
-  postgresql: "9.4"
+  postgresql: "9.5"
+  firefox: "47.0.1"
   apt:
     packages:
       - openjdk-8-jre-headless
@@ -14,12 +13,12 @@ cache:
     - $HOME/.npm
 
 php:
- - 7.0
- - 7.1
- - 7.2
+  - 7.1
+  - 7.2
+  - 7.3
 
 services:
- - mysql
+  - mysql
 
 env:
   matrix:
@@ -33,19 +32,20 @@ env:
     - DB=mysqli MOODLE_BRANCH=master
 
 matrix:
- exclude:
-  - php: 7.0
-    env: DB=pgsql MOODLE_BRANCH=MOODLE_37_STABLE
-  - php: 7.0
-    env: DB=mysqli MOODLE_BRANCH=MOODLE_37_STABLE
-  - php: 7.0
-    env: DB=pgsql MOODLE_BRANCH=MOODLE_38_STABLE
-  - php: 7.0
-    env: DB=mysqli MOODLE_BRANCH=MOODLE_38_STABLE
-  - php: 7.0
-    env: DB=pgsql MOODLE_BRANCH=master
-  - php: 7.0
-    env: DB=mysqli MOODLE_BRANCH=master
+  include:
+    - php: 7.0
+      env: DB=pgsql MOODLE_BRANCH=MOODLE_36_STABLE
+    - php: 7.0
+      env: DB=mysqli MOODLE_BRANCH=MOODLE_36_STABLE
+  exclude:
+    - php: 7.1
+      env: DB=pgsql MOODLE_BRANCH=master
+    - php: 7.1
+      env: DB=mysqli MOODLE_BRANCH=master
+    - php: 7.3
+      env: DB=pgsql MOODLE_BRANCH=MOODLE_36_STABLE
+    - php: 7.3
+      env: DB=mysqli MOODLE_BRANCH=MOODLE_36_STABLE
 
 before_install:
   - phpenv config-rm xdebug.ini
