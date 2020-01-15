@@ -66,7 +66,7 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
                 'category' => $category2->id,
                 'enddate' => $courseenddate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
-                'keepexisting' => false
+                'keependdates' => false
             )
         );
         \core\task\manager::queue_adhoc_task($task);
@@ -88,7 +88,7 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
                 'category' => $category1->id,
                 'enddate'  => $courseenddate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
-                'keepexisting' => false
+                'keependdates' => false
             )
         );
         \core\task\manager::queue_adhoc_task($task);
@@ -113,7 +113,7 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
                 'enddate'   => $newenddate,
                 'startdate' => $newstartdate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
-                'keepexisting' => false
+                'keependdates' => false
             )
         );
         \core\task\manager::queue_adhoc_task($task);
@@ -147,7 +147,7 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
                 'category'  => $category2->id,
                 'enddate'   => $newenddate2,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
-                'keepexisting' => true
+                'keependdates' => true
             )
         );
         \core\task\manager::queue_adhoc_task($task);

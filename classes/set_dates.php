@@ -44,33 +44,33 @@ class set_dates {
      *
      * @param stdClass $course
      * @param stdClass $data
-     * @param bool $keepexisting
+     * @param bool $keependdates
      */
-    public static function maybe_alter_course_dates($course, $data, $keepexisting = false) {
+    public static function maybe_alter_course_dates($course, $data, $keependdates = false) {
         if (!$course->can_edit()) {
             return;
         }
 
+        $course       = get_course($course->id);
+        $lockenddates = $keependdates && isset($course->enddate)   && !empty($course->enddate);
+
         // Handle requested format changes.
-        if (!$keepexisting && $data->autoenddate != TOOL_COURSEDATES_AUTOENDDATE_DEFAULT && $course->format == 'weeks') {
+        if (!$lockenddates && $data->autoenddate != TOOL_COURSEDATES_AUTOENDDATE_DEFAULT && $course->format == 'weeks') {
             $format = course_get_format($course);
             $formatoptions = array('automaticenddate' => $data->autoenddate);
             $format->update_course_format_options($formatoptions);
         }
 
-        $record = get_course($course->id);
         if (isset($data->enddate) && $data->enddate !== 0) {
-            if (!$keepexisting || !isset($record->enddate) || $record->enddate == 0) {
-                $record->enddate = $data->enddate;
-            }
+            $course->enddate = $data->enddate;
         }
-        if (isset($data->startdate) && $data->startdate !== 0) {
-            if (!$keepexisting || !isset($record->enddate) || $record->enddate == 0) {
-                $record->startdate = $data->startdate;
-            }
+
+        if (isset($data->startdate) && $data->startdate !== 0 && !$lockenddates) {
+            $course->startdate = $data->startdate;
         }
+
         try {
-            update_course($record);
+            update_course($course);
         } catch (\moodle_exception $e) {
             debugging($e->getMessage());
         }

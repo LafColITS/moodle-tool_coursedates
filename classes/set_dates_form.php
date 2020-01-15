@@ -65,9 +65,8 @@ class set_dates_form extends \moodleform {
         $mform->setDefault('autoenddate', TOOL_COURSEDATES_AUTOENDDATE_DEFAULT);
 
         // Don't overwrite existing enddates.
-
-        $mform->addElement('checkbox', 'keepexisting', get_string('keepexistingenddates', 'tool_coursedates'));
-        $mform->setDefault('keepexisting', 0);
+        $mform->addElement('checkbox', 'keependdates', get_string('keependdates', 'tool_coursedates'));
+        $mform->setDefault('keependdates', 0);
 
         // Metadata.
         $mform->addElement('hidden', 'category');
