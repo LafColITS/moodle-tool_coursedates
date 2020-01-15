@@ -51,8 +51,8 @@ class set_dates {
             return;
         }
 
-        $course       = get_course($course->id);
-        $lockenddates = $keependdates && isset($course->enddate)   && !empty($course->enddate);
+        $record       = get_course($course->id);
+        $lockenddates = $keependdates && isset($record->enddate) && !empty($record->enddate);
 
         // Handle requested format changes.
         if (!$lockenddates && $data->autoenddate != TOOL_COURSEDATES_AUTOENDDATE_DEFAULT && $course->format == 'weeks') {
@@ -61,16 +61,16 @@ class set_dates {
             $format->update_course_format_options($formatoptions);
         }
 
-        if (isset($data->enddate) && $data->enddate !== 0) {
-            $course->enddate = $data->enddate;
+        if (isset($data->enddate) && $data->enddate !== 0 && !$lockenddates) {
+            $record->enddate = $data->enddate;
         }
 
-        if (isset($data->startdate) && $data->startdate !== 0 && !$lockenddates) {
-            $course->startdate = $data->startdate;
+        if (isset($data->startdate) && $data->startdate !== 0) {
+            $record->startdate = $data->startdate;
         }
 
         try {
-            update_course($course);
+            update_course($record);
         } catch (\moodle_exception $e) {
             debugging($e->getMessage());
         }
