@@ -68,11 +68,7 @@ class set_course_dates_task extends \core\task\adhoc_task {
             )
         );
         foreach ($courses as $course) {
-            if (isset($data->keependdates)) {
-                \tool_coursedates\set_dates::maybe_alter_course_dates($course, $data, $data->keependdates);
-            } else {
-                \tool_coursedates\set_dates::maybe_alter_course_dates($course, $data);
-            }
+            \tool_coursedates\set_dates::maybe_alter_course_dates($course, $data);
         }
     }
 }

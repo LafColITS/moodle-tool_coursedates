@@ -44,15 +44,15 @@ class set_dates {
      *
      * @param stdClass $course
      * @param stdClass $data
-     * @param bool $keependdates
      */
-    public static function maybe_alter_course_dates($course, $data, $keependdates = false) {
+    public static function maybe_alter_course_dates($course, $data) {
         if (!$course->can_edit()) {
             return;
         }
 
-        $record       = get_course($course->id);
-        $lockenddates = $keependdates && isset($record->enddate) && !empty($record->enddate);
+        $record             = get_course($course->id);
+        $data->keependdates = isset($data->keependdates) ? $data->keependdates : TOOL_COURSEDATES_KEEPENDDATES_DEFAULT;
+        $lockenddates       = $data->keependdates == TOOL_COURSEDATES_KEEPENDDATES_ON && isset($record->enddate) && !empty($record->enddate);
 
         // Handle requested format changes.
         if (!$lockenddates && $data->autoenddate != TOOL_COURSEDATES_AUTOENDDATE_DEFAULT && $course->format == 'weeks') {
