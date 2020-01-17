@@ -52,7 +52,7 @@ class set_dates {
 
         $record             = get_course($course->id);
         $data->keependdates = isset($data->keependdates) ? $data->keependdates : TOOL_COURSEDATES_KEEPENDDATES_DEFAULT;
-        $lockenddates       = $data->keependdates == TOOL_COURSEDATES_KEEPENDDATES_ON && isset($record->enddate) && !empty($record->enddate);
+        $lockenddates       = $data->keependdates ==  && isset($record->enddate) && !empty($record->enddate);
 
         // Handle requested format changes.
         if (!$lockenddates && $data->autoenddate != TOOL_COURSEDATES_AUTOENDDATE_DEFAULT && $course->format == 'weeks') {
@@ -61,7 +61,7 @@ class set_dates {
             $format->update_course_format_options($formatoptions);
         }
 
-        if (isset($data->enddate) && $data->enddate !== 0 && !$lockenddates) {
+        if ( !$lockenddates && isset($data->enddate) && $data->enddate !== 0) {
             $record->enddate = $data->enddate;
         }
 
