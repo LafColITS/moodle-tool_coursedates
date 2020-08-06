@@ -2,7 +2,10 @@
 
 ## Unreleased
 
-- Allow retaining existing non-zero end dates (thanks @lucaboesch)
+- [Improvement] Allow retaining existing non-zero end dates (thanks @lucaboesch)
+- Change default branch to "main"
+- Update CI tool to version 3
+- Dropped support for Moodle 3.6
 
 ## 3.6.1 (November 18, 2019)
 
