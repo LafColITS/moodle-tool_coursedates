@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.7.0 (August 14, 2020)
 
 - [Improvement] Allow retaining existing non-zero end dates (thanks @lucaboesch)
 - Change default branch to "main"
