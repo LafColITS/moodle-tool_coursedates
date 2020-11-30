@@ -2,7 +2,7 @@
 Set course dates
 ==========================
 
-[![Build Status](https://api.travis-ci.org/LafColITS/moodle-tool_coursedates.png)](https://api.travis-ci.org/LafColITS/moodle-tool_coursedates)
+![Moodle Plugin CI](https://github.com/LafColITS/moodle-tool_coursedates/workflows/Moodle%20Plugin%20CI/badge.svg)
 
 This admin tool allows managers to set the start and end dates for all courses in a category, including subcategories. This is useful when your student information system integration does not set these automatically, or when you have courses which were loaded prior to Moodle 3.2 and do not have end dates set.
 
