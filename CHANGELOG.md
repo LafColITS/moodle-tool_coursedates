@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+
+- Migrate CI builds to Github Actions
 ## 3.7.0 (August 14, 2020)
 
 - [Improvement] Allow retaining existing non-zero end dates (thanks @lucaboesch)
