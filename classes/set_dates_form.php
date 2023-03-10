@@ -56,8 +56,8 @@ class set_dates_form extends \moodleform {
         // Auto end dates for weekly format.
         $options = array(
             TOOL_COURSEDATES_AUTOENDDATE_DEFAULT => get_string('autoenddate_default', 'tool_coursedates'),
-            TOOL_COURSEDATES_AUTOENDDATE_ON      => get_string('autoenddate_on', 'tool_coursedates'),
-            TOOL_COURSEDATES_AUTOENDDATE_OFF     => get_string('autoenddate_off', 'tool_coursedates')
+            TOOL_COURSEDATES_AUTOENDDATE_ON => get_string('autoenddate_on', 'tool_coursedates'),
+            TOOL_COURSEDATES_AUTOENDDATE_OFF => get_string('autoenddate_off', 'tool_coursedates')
         );
         $mform->addElement('select', 'autoenddate', get_string('autoenddate', 'tool_coursedates'),
             $options);
