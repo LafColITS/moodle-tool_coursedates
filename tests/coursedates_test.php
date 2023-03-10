@@ -86,7 +86,7 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $task->set_custom_data(
             array(
                 'category' => $category1->id,
-                'enddate'  => $courseenddate,
+                'enddate' => $courseenddate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
                 'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_OFF
             )
@@ -109,8 +109,8 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $task = new \tool_coursedates\task\set_course_dates_task();
         $task->set_custom_data(
             array(
-                'category'  => $category2->id,
-                'enddate'   => $newenddate,
+                'category' => $category2->id,
+                'enddate' => $newenddate,
                 'startdate' => $newstartdate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
                 'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_OFF
@@ -143,8 +143,8 @@ class tool_coursedates_coursedates_testcase extends advanced_testcase {
         $task = new \tool_coursedates\task\set_course_dates_task();
         $task->set_custom_data(
             array(
-                'category'  => $category2->id,
-                'enddate'   => $newenddate,
+                'category' => $category2->id,
+                'enddate' => $newenddate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
                 'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_ON
             )
