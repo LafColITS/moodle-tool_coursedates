@@ -8,7 +8,7 @@ This admin tool allows managers to set the start and end dates for all courses i
 
 Requirements
 ------------
-- Moodle 3.9 (build 2020061500 or later)
+- Moodle 4.1 (build 2022112800 or later)
 
 Installation
 ------------

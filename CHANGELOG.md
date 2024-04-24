@@ -3,7 +3,8 @@
 ## Unreleased
 
 - Migrate CI builds to Github Actions
-- Dropped support for Moodle 3.7-3.8
+- Dropped support for Moodle 3.7-4.0
+
 ## 3.7.0 (August 14, 2020)
 
 - [Improvement] Allow retaining existing non-zero end dates (thanks @lucaboesch)
