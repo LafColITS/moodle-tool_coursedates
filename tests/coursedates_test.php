@@ -23,6 +23,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace tool_coursedates;
+
+use advanced_testcase;
+use core\task\manager;
+use tool_coursedates\task\set_course_dates_task;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -36,8 +42,8 @@ require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
  * @copyright 2017 Lafayette College ITS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class tool_coursedates_coursedates_test extends advanced_testcase {
-    public function test_set_dates() {
+final class coursedates_test extends advanced_testcase {
+    public function test_set_dates(): void {
         global $DB;
 
         $this->setAdminUser();
@@ -60,20 +66,20 @@ class tool_coursedates_coursedates_test extends advanced_testcase {
 
         // Set an end date for the second category only.
         $courseenddate = $coursestartdate + 86400;
-        $task = new \tool_coursedates\task\set_course_dates_task();
+        $task = new set_course_dates_task();
         $task->set_custom_data(
             array(
                 'category' => $category2->id,
                 'enddate' => $courseenddate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
-                'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_OFF
+                'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_OFF,
             )
         );
-        \core\task\manager::queue_adhoc_task($task);
-        $task = \core\task\manager::get_next_adhoc_task(time());
+        manager::queue_adhoc_task($task);
+        $task = manager::get_next_adhoc_task(time());
         $this->assertInstanceOf('\\tool_coursedates\\task\\set_course_dates_task', $task);
         $task->execute();
-        \core\task\manager::adhoc_task_complete($task);
+        manager::adhoc_task_complete($task);
 
         // All but one course should have an end date.
         $coursesnoenddate = $DB->count_records('course', array('category' => $category1->id, 'enddate' => $courseenddate));
@@ -82,20 +88,20 @@ class tool_coursedates_coursedates_test extends advanced_testcase {
         $this->assertEquals(100, $coursesnoenddate);
 
         // Set an end date for the first category.
-        $task = new \tool_coursedates\task\set_course_dates_task();
+        $task = new set_course_dates_task();
         $task->set_custom_data(
             array(
                 'category' => $category1->id,
                 'enddate' => $courseenddate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
-                'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_OFF
+                'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_OFF,
             )
         );
-        \core\task\manager::queue_adhoc_task($task);
-        $task = \core\task\manager::get_next_adhoc_task(time());
+        manager::queue_adhoc_task($task);
+        $task = manager::get_next_adhoc_task(time());
         $this->assertInstanceOf('\\tool_coursedates\\task\\set_course_dates_task', $task);
         $task->execute();
-        \core\task\manager::adhoc_task_complete($task);
+        manager::adhoc_task_complete($task);
 
         // All courses should have an end date.
         $coursesnoenddate = $DB->count_records('course', array('category' => $category1->id, 'enddate' => $courseenddate));
@@ -106,21 +112,21 @@ class tool_coursedates_coursedates_test extends advanced_testcase {
         // Move all but one course forward one week.
         $newstartdate = $coursestartdate + 86400;
         $newenddate = $courseenddate + 86400;
-        $task = new \tool_coursedates\task\set_course_dates_task();
+        $task = new set_course_dates_task();
         $task->set_custom_data(
             array(
                 'category' => $category2->id,
                 'enddate' => $newenddate,
                 'startdate' => $newstartdate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
-                'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_OFF
+                'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_OFF,
             )
         );
-        \core\task\manager::queue_adhoc_task($task);
-        $task = \core\task\manager::get_next_adhoc_task(time());
+        manager::queue_adhoc_task($task);
+        $task = manager::get_next_adhoc_task(time());
         $this->assertInstanceOf('\\tool_coursedates\\task\\set_course_dates_task', $task);
         $task->execute();
-        \core\task\manager::adhoc_task_complete($task);
+        manager::adhoc_task_complete($task);
 
         // One course should be forward a week.
         $coursesnewdates = $DB->count_records('course',
@@ -140,20 +146,20 @@ class tool_coursedates_coursedates_test extends advanced_testcase {
 
         // Set a new end date only for the courses in Category 2 with no end date.
         $newenddate = $enddate + 86400;
-        $task = new \tool_coursedates\task\set_course_dates_task();
+        $task = new set_course_dates_task();
         $task->set_custom_data(
             array(
                 'category' => $category2->id,
                 'enddate' => $newenddate,
                 'autoenddate' => TOOL_COURSEDATES_AUTOENDDATE_DEFAULT,
-                'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_ON
+                'keependdates' => TOOL_COURSEDATES_KEEPENDDATES_ON,
             )
         );
-        \core\task\manager::queue_adhoc_task($task);
-        $task = \core\task\manager::get_next_adhoc_task(time());
+        manager::queue_adhoc_task($task);
+        $task = manager::get_next_adhoc_task(time());
         $this->assertInstanceOf('\\tool_coursedates\\task\\set_course_dates_task', $task);
         $task->execute();
-        \core\task\manager::adhoc_task_complete($task);
+        manager::adhoc_task_complete($task);
 
         // Half the courses in Category 2 should have the new end date.
         $courseswitholdenddate = $DB->count_records('course', array('category' => $category2->id, 'enddate' => $enddate));

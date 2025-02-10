@@ -36,7 +36,7 @@ $returnurl = new \moodle_url('/course/management.php', array('categoryid' => $ca
 // Current location.
 $url = new \moodle_url('/admin/tool/coursedates/index.php',
     array(
-        'category' => $categoryid
+        'category' => $categoryid,
     )
 );
 
@@ -59,7 +59,7 @@ if ($mform->is_cancelled()) {
             'category' => $categoryid,
             'enddate' => $data->enddate,
             'startdate' => $data->startdate,
-            'autoenddate' => $data->autoenddate
+            'autoenddate' => $data->autoenddate,
         )
     );
     \core\task\manager::queue_adhoc_task($task);

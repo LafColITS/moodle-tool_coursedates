@@ -24,8 +24,6 @@
 
 namespace tool_coursedates\task;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Adhoc task for setting course dates.
  *
@@ -64,7 +62,7 @@ class set_course_dates_task extends \core\task\adhoc_task {
         $courses = $category->get_courses(
             array(
                 'recursive' => true,
-                'limit' => 0
+                'limit' => 0,
             )
         );
         foreach ($courses as $course) {
