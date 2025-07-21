@@ -16,9 +16,7 @@ Copy the coursedates folder into your /admin/tool directory and visit your Admin
 
 Usage
 -----
-The tool adds a link to the category navigation block, "Set course dates." The user will be taken to a page with date pickers for start and end dates. Each is optional, but you must select at least one to set. On confirmation, Moodle will create an "[adhoc task](https://docs.moodle.org/dev/Task_API#Adhoc_tasks)" to set all the dates in the background. This requires that cron be enabled.
-
-If you're using Boost or a similar theme, you may need to access /course/index.php directly, navigate to the desired category, then click the edit cog at top right to reach the link.
+Navigate to Site administration > Courses > Manage courses and categories. The tool adds a navigation tab labeled "Set course dates".  Make sure you're on the desired category before proceeding. Clicking on "Set course dates" will take you to a page with date pickers for start and end dates. Each is optional, but you must select at least one to set. On confirmation, Moodle will create an "[adhoc task](https://docs.moodle.org/dev/Task_API#Adhoc_tasks)" to set all the dates in the background. This requires that cron be enabled.
 
 Configuration
 -------------
