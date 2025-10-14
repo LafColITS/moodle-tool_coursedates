@@ -27,7 +27,7 @@ namespace tool_coursedates;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
-require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
+require_once($CFG->dirroot . '/admin/tool/coursedates/locallib.php');
 
 /**
  * Form for changing course dates.
@@ -48,19 +48,23 @@ class set_dates_form extends \moodleform {
         $mform->addElement('html', '<p>' . get_string('setdatesinstruction', 'tool_coursedates') . '</p>');
 
         // Date pickers.
-        $mform->addElement('date_selector', 'startdate', get_string('startdate'), array('optional' => true));
+        $mform->addElement('date_selector', 'startdate', get_string('startdate'), ['optional' => true]);
         $mform->addHelpButton('startdate', 'startdate');
-        $mform->addElement('date_selector', 'enddate', get_string('enddate'), array('optional' => true));
+        $mform->addElement('date_selector', 'enddate', get_string('enddate'), ['optional' => true]);
         $mform->addHelpButton('enddate', 'enddate');
 
         // Auto end dates for weekly format.
-        $options = array(
+        $options = [
             TOOL_COURSEDATES_AUTOENDDATE_DEFAULT => get_string('autoenddate_default', 'tool_coursedates'),
             TOOL_COURSEDATES_AUTOENDDATE_ON => get_string('autoenddate_on', 'tool_coursedates'),
             TOOL_COURSEDATES_AUTOENDDATE_OFF => get_string('autoenddate_off', 'tool_coursedates'),
+        ];
+        $mform->addElement(
+            'select',
+            'autoenddate',
+            get_string('autoenddate', 'tool_coursedates'),
+            $options
         );
-        $mform->addElement('select', 'autoenddate', get_string('autoenddate', 'tool_coursedates'),
-            $options);
         $mform->addHelpButton('autoenddate', 'autoenddate', 'tool_coursedates');
         $mform->setDefault('autoenddate', TOOL_COURSEDATES_AUTOENDDATE_DEFAULT);
 
@@ -82,9 +86,11 @@ class set_dates_form extends \moodleform {
      * @param array $files Submitted files. Unused.
      */
     public function validation($data, $files) {
-        $errors = array();
-        if ((!isset($data['startdate']) || $data['startdate'] == 0)
-            && (!isset($data['enddate']) || $data['enddate'] == 0)) {
+        $errors = [];
+        if (
+            (!isset($data['startdate']) || $data['startdate'] == 0)
+            && (!isset($data['enddate']) || $data['enddate'] == 0)
+        ) {
             $errors['startdate'] = get_string('atleastonedate', 'tool_coursedates');
         }
         return $errors;

@@ -33,15 +33,15 @@ function tool_coursedates_extend_navigation_category_settings($navigation, $cont
          $navigation->add_node(
              navigation_node::create(
                  get_string('setdates', 'tool_coursedates'),
-                    new moodle_url(
-                        "/admin/tool/coursedates/index.php",
-                        array('category' => $context->instanceid)
-                    ),
-                    navigation_node::TYPE_SETTING,
-                    null,
-                    null,
-                    new pix_icon('i/settings', '')
-                    )
-                );
+                 new moodle_url(
+                     "/admin/tool/coursedates/index.php",
+                     ['category' => $context->instanceid]
+                 ),
+                 navigation_node::TYPE_SETTING,
+                 null,
+                 null,
+                 new pix_icon('i/settings', '')
+             )
+         );
     }
 }

@@ -60,10 +60,10 @@ class set_course_dates_task extends \core\task\adhoc_task {
             return;
         }
         $courses = $category->get_courses(
-            array(
+            [
                 'recursive' => true,
                 'limit' => 0,
-            )
+            ]
         );
         foreach ($courses as $course) {
             \tool_coursedates\set_dates::maybe_alter_course_dates($course, $data);

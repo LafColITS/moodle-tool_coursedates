@@ -31,43 +31,47 @@ $context = \context_coursecat::instance($categoryid);
 // Ensure the user can be here.
 require_login(0, false);
 require_capability('tool/coursedates:setdates', $context);
-$returnurl = new \moodle_url('/course/management.php', array('categoryid' => $categoryid));
+$returnurl = new \moodle_url('/course/management.php', ['categoryid' => $categoryid]);
 
 // Current location.
-$url = new \moodle_url('/admin/tool/coursedates/index.php',
-    array(
+$url = new \moodle_url(
+    '/admin/tool/coursedates/index.php',
+    [
         'category' => $categoryid,
-    )
+    ]
 );
 
 // Setup page.
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('admin');
 $PAGE->set_url($url);
-$PAGE->set_title(new lang_string('coursecatmanagement') . ': '. get_string('setdates', 'tool_coursedates'));
+$PAGE->set_title(new lang_string('coursecatmanagement') . ': ' . get_string('setdates', 'tool_coursedates'));
 $PAGE->set_heading($SITE->fullname);
 
 // Create form.
-$mform = new \tool_coursedates\set_dates_form('index.php', array('category' => $categoryid));
+$mform = new \tool_coursedates\set_dates_form('index.php', ['category' => $categoryid]);
 if ($mform->is_cancelled()) {
     redirect($returnurl);
 } else if ($data = $mform->get_data()) {
     // Process data.
     $task = new \tool_coursedates\task\set_course_dates_task();
     $task->set_custom_data(
-        array(
+        [
             'category' => $categoryid,
             'enddate' => $data->enddate,
             'startdate' => $data->startdate,
             'autoenddate' => $data->autoenddate,
-        )
+        ]
     );
     \core\task\manager::queue_adhoc_task($task);
-    redirect($returnurl, get_string('updatequeued', 'tool_coursedates',
-        format_string($category->name, true, array('context' => $context))));
+    redirect($returnurl, get_string(
+        'updatequeued',
+        'tool_coursedates',
+        format_string($category->name, true, ['context' => $context])
+    ));
 } else {
     // Prepare the form.
-    $mform->set_data(array('category' => $categoryid));
+    $mform->set_data(['category' => $categoryid]);
 }
 
 // Print page.

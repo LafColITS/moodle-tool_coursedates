@@ -27,8 +27,8 @@ namespace tool_coursedates;
 defined('MOODLE_INTERNAL') || die();
 global $CFG;
 
-require_once($CFG->dirroot.'/admin/tool/coursedates/locallib.php');
-require_once($CFG->dirroot.'/course/lib.php');
+require_once($CFG->dirroot . '/admin/tool/coursedates/locallib.php');
+require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/course/externallib.php');
 
 /**
@@ -58,11 +58,11 @@ class set_dates {
         // Handle requested format changes.
         if (!$lockenddates && $data->autoenddate != TOOL_COURSEDATES_AUTOENDDATE_DEFAULT && $course->format == 'weeks') {
             $format = course_get_format($course);
-            $formatoptions = array('automaticenddate' => $data->autoenddate);
+            $formatoptions = ['automaticenddate' => $data->autoenddate];
             $format->update_course_format_options($formatoptions);
         }
 
-        if ( !$lockenddates && isset($data->enddate) && $data->enddate !== 0) {
+        if (!$lockenddates && isset($data->enddate) && $data->enddate !== 0) {
             $record->enddate = $data->enddate;
         }
 
