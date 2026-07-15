@@ -1,0 +1,12 @@
+{
+    "name": "lafayettecollege/moodle-tool_coursedates",
+    "description": "This admin tool allows managers to set the start and end dates for all courses in a category, including subcategories.",
+    "type": "moodle-tool",
+    "require": {
+        "composer/installers": "*"
+    },
+    "license": "GPL-3.0-or-later",
+    "extra": {
+        "installer-name": "coursedates"
+    }
+}

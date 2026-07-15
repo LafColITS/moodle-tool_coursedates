@@ -24,8 +24,8 @@
 
  defined('MOODLE_INTERNAL') || die();
 
- $plugin->version = 2020081400;
+ $plugin->version = 2026071500;
  $plugin->requires = 2022112800;
  $plugin->component = 'tool_coursedates';
  $plugin->maturity = MATURITY_STABLE;
- $plugin->release = 'v3.7.0';
+ $plugin->release = 'v4.1.0';

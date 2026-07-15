@@ -1,9 +1,10 @@
 # Changelog
 
-## Unreleased
+## 4.1.0 (July 15, 2026)
 
 - Migrate CI builds to Github Actions
 - Dropped support for Moodle 3.7-4.0
+- Add composer support
 
 ## 3.7.0 (August 14, 2020)
 
