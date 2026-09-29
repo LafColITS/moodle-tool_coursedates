@@ -39,6 +39,7 @@ require_once($CFG->dirroot . '/admin/tool/coursedates/locallib.php');
  * Unit test for courses which have a weekly format .
  *
  * @package   tool_coursedates
+ * @covers    \tool_coursedates\set_dates::maybe_alter_course_dates
  * @copyright 2017 Lafayette College ITS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
